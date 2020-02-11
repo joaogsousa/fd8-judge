@@ -5,16 +5,17 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/matheuscscp/fd8-judge/pkg/services"
+	"github.com/matheuscscp/fd8-judge/pkg/services/file"
+	"github.com/matheuscscp/fd8-judge/pkg/services/fileerror"
 )
 
 type testCaseFiles struct {
 	input, output string
 }
 
-func listTestCases(fileSvc services.FileService) ([]*testCaseFiles, error) {
+func listTestCases(fileSvc file.Service) ([]*testCaseFiles, error) {
 	inputFiles, err := fileSvc.ListFiles(folderPathBundleInputs)
-	if err != nil && !errors.Is(err, &services.NoSuchFolderError{}) {
+	if err != nil && !errors.Is(err, &fileerror.NoSuchFolderError{}) {
 		return nil, fmt.Errorf("error listing input files: %w", err)
 	}
 	testCases := make([]*testCaseFiles, 1)

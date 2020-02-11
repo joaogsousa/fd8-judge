@@ -1,4 +1,4 @@
-package services
+package program
 
 import (
 	"context"
@@ -8,8 +8,8 @@ import (
 )
 
 type (
-	// ProgramService provides methods to compile and execute programs.
-	ProgramService interface {
+	// Service provides methods to compile and execute programs.
+	Service interface {
 		// Compile compiles a source code file to a binary file.
 		Compile(ctx context.Context, sourceRelativePath, binaryRelativePath string) error
 
@@ -36,9 +36,9 @@ type (
 	}
 )
 
-// NewProgramService creates a ProgramService according to the given key.
-// If nil is passed, the ProgramService will be created with the default programServiceRuntime.
-func NewProgramService(programServiceKey string, runtime programServiceRuntime) (ProgramService, error) {
+// NewProgramService creates a Service according to the given key.
+// If nil is passed, the Service will be created with the default programServiceRuntime.
+func NewProgramService(programServiceKey string, runtime programServiceRuntime) (Service, error) {
 	if runtime == nil {
 		runtime = &programServiceDefaultRuntime{}
 	}
@@ -64,8 +64,8 @@ func GetProgramServices() []string {
 }
 
 // getProgramServices returns the available program services.
-func getProgramServices(runtime programServiceRuntime) map[string]ProgramService {
-	return map[string]ProgramService{
+func getProgramServices(runtime programServiceRuntime) map[string]Service {
+	return map[string]Service{
 		"c++11": &cpp11ProgramService{runtime: runtime},
 	}
 }

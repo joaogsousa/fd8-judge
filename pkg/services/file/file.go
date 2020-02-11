@@ -1,4 +1,4 @@
-package services
+package file
 
 import (
 	"archive/tar"
@@ -12,6 +12,8 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+
+	"github.com/matheuscscp/fd8-judge/pkg/services/fileerror"
 )
 
 const (
@@ -25,8 +27,8 @@ const (
 )
 
 type (
-	// FileService provides methods to manipulate files.
-	FileService interface {
+	// Service provides methods to manipulate files.
+	Service interface {
 		// DownloadFile downloads a file storing it in the local file system and returns the number of
 		// bytes written.
 		DownloadFile(relativePath, url string, headers http.Header) (int64, error)
@@ -86,9 +88,9 @@ type (
 	}
 )
 
-// NewFileService returns a new instance of the default implementation of FileService.
-// If nil is passed, the default FileService will be created with the default defaultFileServiceRuntime.
-func NewFileService(runtime defaultFileServiceRuntime) FileService {
+// NewFileService returns a new instance of the default implementation of Service.
+// If nil is passed, the default Service will be created with the default defaultFileServiceRuntime.
+func NewFileService(runtime defaultFileServiceRuntime) Service {
 	if runtime == nil {
 		runtime = &fileServiceDefaultRuntime{}
 	}
@@ -388,7 +390,7 @@ func (f *defaultFileService) ListFiles(relativePath string) ([]string, error) {
 	infos, err := f.runtime.ReadDir(relativePath)
 	if err != nil {
 		if strings.Contains(err.Error(), "no such file or directory") {
-			return nil, &NoSuchFolderError{Path: relativePath}
+			return nil, &fileerror.NoSuchFolderError{Path: relativePath}
 		}
 		return nil, fmt.Errorf("error reading folder to list files: %w", err)
 	}
