@@ -12,8 +12,6 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
-
-	"github.com/matheuscscp/fd8-judge/pkg/services/fileerror"
 )
 
 const (
@@ -88,9 +86,9 @@ type (
 	}
 )
 
-// NewFileService returns a new instance of the default implementation of Service.
+// NewService returns a new instance of the default implementation of Service.
 // If nil is passed, the default Service will be created with the default defaultFileServiceRuntime.
-func NewFileService(runtime defaultFileServiceRuntime) Service {
+func NewService(runtime defaultFileServiceRuntime) Service {
 	if runtime == nil {
 		runtime = &fileServiceDefaultRuntime{}
 	}
@@ -390,7 +388,7 @@ func (f *defaultFileService) ListFiles(relativePath string) ([]string, error) {
 	infos, err := f.runtime.ReadDir(relativePath)
 	if err != nil {
 		if strings.Contains(err.Error(), "no such file or directory") {
-			return nil, &fileerror.NoSuchFolderError{Path: relativePath}
+			return nil, &NoSuchFolderError{Path: relativePath}
 		}
 		return nil, fmt.Errorf("error reading folder to list files: %w", err)
 	}

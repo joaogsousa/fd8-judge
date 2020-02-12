@@ -1,4 +1,4 @@
-package fileerror
+package file
 
 import "fmt"
 

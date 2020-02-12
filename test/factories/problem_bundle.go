@@ -12,7 +12,7 @@ type ProblemBundleFactory struct {
 
 // CreateCpp11HelloWorldBundle creates a hello world problem bundle for tests.
 func (*ProblemBundleFactory) Create(bundle FileTreeNode, relativePath string) error {
-	fileSvc := file.NewFileService(nil)
+	fileSvc := file.NewService(nil)
 
 	if err := bundle.Write("."); err != nil {
 		return err

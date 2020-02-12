@@ -36,26 +36,26 @@ type (
 	}
 )
 
-// NewProgramService creates a Service according to the given key.
+// NewService creates a Service according to the given key.
 // If nil is passed, the Service will be created with the default programServiceRuntime.
-func NewProgramService(programServiceKey string, runtime programServiceRuntime) (Service, error) {
+func NewService(programServiceKey string, runtime programServiceRuntime) (Service, error) {
 	if runtime == nil {
 		runtime = &programServiceDefaultRuntime{}
 	}
-	svc, ok := getProgramServices(runtime)[programServiceKey]
+	svc, ok := getServices(runtime)[programServiceKey]
 	if !ok {
 		return nil, fmt.Errorf(
 			"invalid program service, want one in {%s}, got '%s'",
-			strings.Join(GetProgramServices(), ", "),
+			strings.Join(GetServices(), ", "),
 			programServiceKey,
 		)
 	}
 	return svc, nil
 }
 
-// GetProgramServices returns a string list of the available program services.
-func GetProgramServices() []string {
-	programServices := getProgramServices(nil)
+// GetServices returns a string list of the available program services.
+func GetServices() []string {
+	programServices := getServices(nil)
 	strings := make([]string, 0, len(programServices))
 	for key := range programServices {
 		strings = append(strings, "'"+key+"'")
@@ -63,8 +63,8 @@ func GetProgramServices() []string {
 	return strings
 }
 
-// getProgramServices returns the available program services.
-func getProgramServices(runtime programServiceRuntime) map[string]Service {
+// getServices returns the available program services.
+func getServices(runtime programServiceRuntime) map[string]Service {
 	return map[string]Service{
 		"c++11": &cpp11ProgramService{runtime: runtime},
 	}

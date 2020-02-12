@@ -1,6 +1,6 @@
 // +build unit
 
-package fileerror_test
+package file_test
 
 import (
 	"archive/tar"
@@ -12,7 +12,6 @@ import (
 	"testing"
 
 	"github.com/matheuscscp/fd8-judge/pkg/services/file"
-	"github.com/matheuscscp/fd8-judge/pkg/services/fileerror"
 	"github.com/matheuscscp/fd8-judge/test/fixtures"
 	"github.com/matheuscscp/fd8-judge/test/mocks"
 	mockFile "github.com/matheuscscp/fd8-judge/test/mocks/gen/pkg/services/file"
@@ -110,7 +109,7 @@ func TestDownloadFileError(t *testing.T) {
 				test.mocks()
 			}
 
-			fileSvc := file.NewFileService(mockRuntime)
+			fileSvc := file.NewService(mockRuntime)
 			bytes, err := fileSvc.DownloadFile(test.input.relativePath, test.input.url, test.input.headers)
 			assert.Equal(t, test.output, testOutput{
 				bytes: bytes,
@@ -348,7 +347,7 @@ func TestUploadFileError(t *testing.T) {
 				test.mocks()
 			}
 
-			fileSvc := file.NewFileService(mockRuntime)
+			fileSvc := file.NewService(mockRuntime)
 			err := fileSvc.UploadFile(test.input.relativePath, test.input.authorizedServerURL)
 			assert.Equal(t, test.output, testOutput{
 				err: err,
@@ -408,7 +407,7 @@ func TestCompressError(t *testing.T) {
 				test.mocks()
 			}
 
-			fileSvc := file.NewFileService(mockRuntime)
+			fileSvc := file.NewService(mockRuntime)
 			err := fileSvc.Compress(test.input.inputRelativePath, test.input.outputRelativePath)
 			assert.Equal(t, test.output, testOutput{
 				err: err,
@@ -511,7 +510,7 @@ func TestVisitNodeForCompressionError(t *testing.T) {
 				test.mocks()
 			}
 
-			fileSvc := file.NewFileService(mockRuntime).(interface { // comment to skip mockgen
+			fileSvc := file.NewService(mockRuntime).(interface { // comment to skip mockgen
 				VisitNodeForCompression(
 					outTar *tar.Writer,
 					inputRelativePath string,
@@ -678,7 +677,7 @@ func TestUncompressError(t *testing.T) {
 				test.mocks()
 			}
 
-			fileSvc := file.NewFileService(mockRuntime)
+			fileSvc := file.NewService(mockRuntime)
 			err := fileSvc.Uncompress(test.input.inputRelativePath, test.input.outputRelativePath)
 			assert.Equal(t, test.output, testOutput{
 				err: err,
@@ -725,7 +724,7 @@ func TestRemoveFileTreeError(t *testing.T) {
 				test.mocks()
 			}
 
-			fileSvc := file.NewFileService(mockRuntime)
+			fileSvc := file.NewService(mockRuntime)
 			err := fileSvc.RemoveFileTree(test.input.relativePath)
 			assert.Equal(t, test.output, testOutput{
 				err: err,
@@ -773,7 +772,7 @@ func TestOpenFileError(t *testing.T) {
 				test.mocks()
 			}
 
-			fileSvc := file.NewFileService(mockRuntime)
+			fileSvc := file.NewService(mockRuntime)
 			file, err := fileSvc.OpenFile(test.input.relativePath)
 			assert.Equal(t, test.output, testOutput{
 				file: file,
@@ -834,7 +833,7 @@ func TestCreateFileError(t *testing.T) {
 				test.mocks()
 			}
 
-			fileSvc := file.NewFileService(mockRuntime)
+			fileSvc := file.NewService(mockRuntime)
 			file, err := fileSvc.CreateFile(test.input.relativePath)
 			assert.Equal(t, test.output, testOutput{
 				file: file,
@@ -866,7 +865,7 @@ func TestListFilesError(t *testing.T) {
 	}{
 		"no-such-folder-error": {
 			output: testOutput{
-				err:       &fileerror.NoSuchFolderError{Path: filepath.Clean("")},
+				err:       &NoSuchFolderError{Path: filepath.Clean("")},
 				errString: fmt.Sprintf("no such folder: '%s'", filepath.Clean("")),
 			},
 			mocks: func() {
@@ -895,7 +894,7 @@ func TestListFilesError(t *testing.T) {
 				test.mocks()
 			}
 
-			fileSvc := file.NewFileService(mockRuntime)
+			fileSvc := file.NewService(mockRuntime)
 			files, err := fileSvc.ListFiles(test.input.relativePath)
 			assert.Equal(t, test.output, testOutput{
 				files:     files,
@@ -945,7 +944,7 @@ func TestMoveFileTreeError(t *testing.T) {
 				test.mocks()
 			}
 
-			fileSvc := file.NewFileService(mockRuntime)
+			fileSvc := file.NewService(mockRuntime)
 			err := fileSvc.MoveFileTree(test.input.oldRelativePath, test.input.newRelativePath)
 			assert.Equal(t, test.output, testOutput{
 				err: err,

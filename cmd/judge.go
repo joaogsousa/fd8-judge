@@ -113,7 +113,7 @@ func parseExecuteFlags(cmd *cobra.Command, flags *executeFlags) (*judge.Executor
 		SolutionRequestHeaders:    solutionHeaders,
 		Interactor:                flags.interactor,
 		UploadAuthorizedServerURL: flags.uploadAuthorizedServerURL,
-		FileService:               file.NewFileService(nil),
+		FileService:               file.NewService(nil),
 		InteractorProgramService:  interactorProgramService,
 		SolutionProgramService:    solutionProgramService,
 		InteractorCage:            interactorCage,
@@ -123,7 +123,7 @@ func parseExecuteFlags(cmd *cobra.Command, flags *executeFlags) (*judge.Executor
 
 // bindExecuteFlags binds judge execute command flags.
 func bindExecuteFlags(cmd *cobra.Command, flags *executeFlags) {
-	availableProgramServices := strings.Join(program.GetProgramServices(), ", ")
+	availableProgramServices := strings.Join(program.GetServices(), ", ")
 	cmd.Flags().StringVar(
 		&flags.bundleRequestURL, "bundle-request-url", "",
 		"HTTP GET endpoint to download the problem bundle.",

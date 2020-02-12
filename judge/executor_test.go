@@ -86,7 +86,7 @@ func TestExecute(t *testing.T) {
 				SolutionRequestURL:        fmt.Sprintf("http://localhost:%d/download?path=./serverFiles/solution", port),
 				Interactor:                test.interactor,
 				UploadAuthorizedServerURL: fmt.Sprintf("http://localhost:%d/upload", port),
-				FileService:               file.NewFileService(nil),
+				FileService:               file.NewService(nil),
 				InteractorProgramService:  interactorProgramService,
 				SolutionProgramService:    solutionProgramService,
 				InteractorCage:            cage,
