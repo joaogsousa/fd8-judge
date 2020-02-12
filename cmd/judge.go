@@ -74,11 +74,11 @@ func parseExecuteFlags(cmd *cobra.Command, flags *executeFlags) (*judge.Executor
 	if err := json.Unmarshal([]byte(flags.solutionRequestHeaders), &solutionHeaders); err != nil {
 		return nil, fmt.Errorf("error unmarshaling problem solution request headers: %w", err)
 	}
-	interactorProgramService, err := program.NewProgramService(flags.interactorProgramService, nil)
+	interactorProgramService, err := program.NewService(flags.interactorProgramService, nil)
 	if flags.interactorProgramService != "" && err != nil {
 		return nil, fmt.Errorf("error creating program service for interactor: %w", err)
 	}
-	solutionProgramService, err := program.NewProgramService(flags.solutionProgramService, nil)
+	solutionProgramService, err := program.NewService(flags.solutionProgramService, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error creating program service for solution: %w", err)
 	}

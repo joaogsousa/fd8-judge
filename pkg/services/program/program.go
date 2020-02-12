@@ -23,31 +23,31 @@ type (
 		GetBinaryFileExtension() string
 	}
 
-	programServiceRuntime interface {
+	serviceRuntime interface {
 		Run(cmd *exec.Cmd) error
 	}
 
-	programServiceDefaultRuntime struct {
+	defaultServiceRuntime struct {
 	}
 
-	// cpp11ProgramService implements compilation and execution for C++ 11.
-	cpp11ProgramService struct {
-		runtime programServiceRuntime
+	// cpp11Service implements compilation and execution for C++ 11.
+	cpp11Service struct {
+		runtime serviceRuntime
 	}
 )
 
 // NewService creates a Service according to the given key.
-// If nil is passed, the Service will be created with the default programServiceRuntime.
-func NewService(programServiceKey string, runtime programServiceRuntime) (Service, error) {
+// If nil is passed, the Service will be created with the default serviceRuntime.
+func NewService(serviceKey string, runtime serviceRuntime) (Service, error) {
 	if runtime == nil {
-		runtime = &programServiceDefaultRuntime{}
+		runtime = &defaultServiceRuntime{}
 	}
-	svc, ok := getServices(runtime)[programServiceKey]
+	svc, ok := getServices(runtime)[serviceKey]
 	if !ok {
 		return nil, fmt.Errorf(
 			"invalid program service, want one in {%s}, got '%s'",
 			strings.Join(GetServices(), ", "),
-			programServiceKey,
+			serviceKey,
 		)
 	}
 	return svc, nil
@@ -64,17 +64,17 @@ func GetServices() []string {
 }
 
 // getServices returns the available program services.
-func getServices(runtime programServiceRuntime) map[string]Service {
+func getServices(runtime serviceRuntime) map[string]Service {
 	return map[string]Service{
-		"c++11": &cpp11ProgramService{runtime: runtime},
+		"c++11": &cpp11Service{runtime: runtime},
 	}
 }
 
-func (*programServiceDefaultRuntime) Run(cmd *exec.Cmd) error {
+func (*defaultServiceRuntime) Run(cmd *exec.Cmd) error {
 	return cmd.Run()
 }
 
-func (p *cpp11ProgramService) Compile(ctx context.Context, sourceRelativePath, binaryRelativePath string) error {
+func (p *cpp11Service) Compile(ctx context.Context, sourceRelativePath, binaryRelativePath string) error {
 	cmd := exec.CommandContext(ctx, "g++", "-std=c++11", sourceRelativePath, "-o", binaryRelativePath)
 	if err := p.runtime.Run(cmd); err != nil {
 		return fmt.Errorf("error compiling for c++11: %w", err)
@@ -82,14 +82,14 @@ func (p *cpp11ProgramService) Compile(ctx context.Context, sourceRelativePath, b
 	return nil
 }
 
-func (*cpp11ProgramService) GetExecutionCommand(ctx context.Context, sourceRelativePath, binaryRelativePath string) *exec.Cmd {
+func (*cpp11Service) GetExecutionCommand(ctx context.Context, sourceRelativePath, binaryRelativePath string) *exec.Cmd {
 	return exec.CommandContext(ctx, binaryRelativePath)
 }
 
-func (*cpp11ProgramService) GetSourceFileExtension() string {
+func (*cpp11Service) GetSourceFileExtension() string {
 	return ".cpp"
 }
 
-func (*cpp11ProgramService) GetBinaryFileExtension() string {
+func (*cpp11Service) GetBinaryFileExtension() string {
 	return ""
 }

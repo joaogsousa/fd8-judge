@@ -23,7 +23,7 @@ import (
 func TestDownloadFileError(t *testing.T) {
 	t.Parallel()
 
-	var mockRuntime *mockFile.MockdefaultFileServiceRuntime
+	var mockRuntime *mockFile.MockserviceRuntime
 
 	type (
 		testInput struct {
@@ -104,7 +104,7 @@ func TestDownloadFileError(t *testing.T) {
 			// mocks
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
-			mockRuntime = mockFile.NewMockdefaultFileServiceRuntime(ctrl)
+			mockRuntime = mockFile.NewMockserviceRuntime(ctrl)
 			if test.mocks != nil {
 				test.mocks()
 			}
@@ -122,7 +122,7 @@ func TestDownloadFileError(t *testing.T) {
 func TestUploadFileError(t *testing.T) {
 	t.Parallel()
 
-	var mockRuntime *mockFile.MockdefaultFileServiceRuntime
+	var mockRuntime *mockFile.MockserviceRuntime
 
 	type (
 		testInput struct {
@@ -342,7 +342,7 @@ func TestUploadFileError(t *testing.T) {
 			// mocks
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
-			mockRuntime = mockFile.NewMockdefaultFileServiceRuntime(ctrl)
+			mockRuntime = mockFile.NewMockserviceRuntime(ctrl)
 			if test.mocks != nil {
 				test.mocks()
 			}
@@ -359,7 +359,7 @@ func TestUploadFileError(t *testing.T) {
 func TestCompressError(t *testing.T) {
 	t.Parallel()
 
-	var mockRuntime *mockFile.MockdefaultFileServiceRuntime
+	var mockRuntime *mockFile.MockserviceRuntime
 
 	type (
 		testInput struct {
@@ -402,7 +402,7 @@ func TestCompressError(t *testing.T) {
 			// mocks
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
-			mockRuntime = mockFile.NewMockdefaultFileServiceRuntime(ctrl)
+			mockRuntime = mockFile.NewMockserviceRuntime(ctrl)
 			if test.mocks != nil {
 				test.mocks()
 			}
@@ -419,7 +419,7 @@ func TestCompressError(t *testing.T) {
 func TestVisitNodeForCompressionError(t *testing.T) {
 	t.Parallel()
 
-	var mockRuntime *mockFile.MockdefaultFileServiceRuntime
+	var mockRuntime *mockFile.MockserviceRuntime
 
 	type (
 		testInput struct {
@@ -505,7 +505,7 @@ func TestVisitNodeForCompressionError(t *testing.T) {
 			// mocks
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
-			mockRuntime = mockFile.NewMockdefaultFileServiceRuntime(ctrl)
+			mockRuntime = mockFile.NewMockserviceRuntime(ctrl)
 			if test.mocks != nil {
 				test.mocks()
 			}
@@ -536,7 +536,7 @@ func TestVisitNodeForCompressionError(t *testing.T) {
 func TestUncompressError(t *testing.T) {
 	t.Parallel()
 
-	var mockRuntime *mockFile.MockdefaultFileServiceRuntime
+	var mockRuntime *mockFile.MockserviceRuntime
 
 	type (
 		testInput struct {
@@ -672,7 +672,7 @@ func TestUncompressError(t *testing.T) {
 			// mocks
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
-			mockRuntime = mockFile.NewMockdefaultFileServiceRuntime(ctrl)
+			mockRuntime = mockFile.NewMockserviceRuntime(ctrl)
 			if test.mocks != nil {
 				test.mocks()
 			}
@@ -689,7 +689,7 @@ func TestUncompressError(t *testing.T) {
 func TestRemoveFileTreeError(t *testing.T) {
 	t.Parallel()
 
-	var mockRuntime *mockFile.MockdefaultFileServiceRuntime
+	var mockRuntime *mockFile.MockserviceRuntime
 
 	type (
 		testInput struct {
@@ -719,7 +719,7 @@ func TestRemoveFileTreeError(t *testing.T) {
 			// mocks
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
-			mockRuntime = mockFile.NewMockdefaultFileServiceRuntime(ctrl)
+			mockRuntime = mockFile.NewMockserviceRuntime(ctrl)
 			if test.mocks != nil {
 				test.mocks()
 			}
@@ -736,7 +736,7 @@ func TestRemoveFileTreeError(t *testing.T) {
 func TestOpenFileError(t *testing.T) {
 	t.Parallel()
 
-	var mockRuntime *mockFile.MockdefaultFileServiceRuntime
+	var mockRuntime *mockFile.MockserviceRuntime
 
 	type (
 		testInput struct {
@@ -767,7 +767,7 @@ func TestOpenFileError(t *testing.T) {
 			// mocks
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
-			mockRuntime = mockFile.NewMockdefaultFileServiceRuntime(ctrl)
+			mockRuntime = mockFile.NewMockserviceRuntime(ctrl)
 			if test.mocks != nil {
 				test.mocks()
 			}
@@ -785,7 +785,7 @@ func TestOpenFileError(t *testing.T) {
 func TestCreateFileError(t *testing.T) {
 	t.Parallel()
 
-	var mockRuntime *mockFile.MockdefaultFileServiceRuntime
+	var mockRuntime *mockFile.MockserviceRuntime
 
 	type (
 		testInput struct {
@@ -828,7 +828,7 @@ func TestCreateFileError(t *testing.T) {
 			// mocks
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
-			mockRuntime = mockFile.NewMockdefaultFileServiceRuntime(ctrl)
+			mockRuntime = mockFile.NewMockserviceRuntime(ctrl)
 			if test.mocks != nil {
 				test.mocks()
 			}
@@ -846,7 +846,7 @@ func TestCreateFileError(t *testing.T) {
 func TestListFilesError(t *testing.T) {
 	t.Parallel()
 
-	var mockRuntime *mockFile.MockdefaultFileServiceRuntime
+	var mockRuntime *mockFile.MockserviceRuntime
 
 	type (
 		testInput struct {
@@ -865,7 +865,7 @@ func TestListFilesError(t *testing.T) {
 	}{
 		"no-such-folder-error": {
 			output: testOutput{
-				err:       &NoSuchFolderError{Path: filepath.Clean("")},
+				err:       &file.NoSuchFolderError{Path: filepath.Clean("")},
 				errString: fmt.Sprintf("no such folder: '%s'", filepath.Clean("")),
 			},
 			mocks: func() {
@@ -889,7 +889,7 @@ func TestListFilesError(t *testing.T) {
 			// mocks
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
-			mockRuntime = mockFile.NewMockdefaultFileServiceRuntime(ctrl)
+			mockRuntime = mockFile.NewMockserviceRuntime(ctrl)
 			if test.mocks != nil {
 				test.mocks()
 			}
@@ -908,7 +908,7 @@ func TestListFilesError(t *testing.T) {
 func TestMoveFileTreeError(t *testing.T) {
 	t.Parallel()
 
-	var mockRuntime *mockFile.MockdefaultFileServiceRuntime
+	var mockRuntime *mockFile.MockserviceRuntime
 
 	type (
 		testInput struct {
@@ -939,7 +939,7 @@ func TestMoveFileTreeError(t *testing.T) {
 			// mocks
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
-			mockRuntime = mockFile.NewMockdefaultFileServiceRuntime(ctrl)
+			mockRuntime = mockFile.NewMockserviceRuntime(ctrl)
 			if test.mocks != nil {
 				test.mocks()
 			}

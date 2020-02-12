@@ -33,7 +33,7 @@ func TestCompileAndExecute(t *testing.T) {
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
-			svc, err := program.NewProgramService(test.programService, nil)
+			svc, err := program.NewService(test.programService, nil)
 			assert.Equal(t, nil, err)
 
 			err = programFactory.Create(test.program, test.sourcePath)

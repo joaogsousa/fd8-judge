@@ -90,31 +90,31 @@ func (mr *MockServiceMockRecorder) GetBinaryFileExtension() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBinaryFileExtension", reflect.TypeOf((*MockService)(nil).GetBinaryFileExtension))
 }
 
-// MockprogramServiceRuntime is a mock of programServiceRuntime interface
-type MockprogramServiceRuntime struct {
+// MockserviceRuntime is a mock of serviceRuntime interface
+type MockserviceRuntime struct {
 	ctrl     *gomock.Controller
-	recorder *MockprogramServiceRuntimeMockRecorder
+	recorder *MockserviceRuntimeMockRecorder
 }
 
-// MockprogramServiceRuntimeMockRecorder is the mock recorder for MockprogramServiceRuntime
-type MockprogramServiceRuntimeMockRecorder struct {
-	mock *MockprogramServiceRuntime
+// MockserviceRuntimeMockRecorder is the mock recorder for MockserviceRuntime
+type MockserviceRuntimeMockRecorder struct {
+	mock *MockserviceRuntime
 }
 
-// NewMockprogramServiceRuntime creates a new mock instance
-func NewMockprogramServiceRuntime(ctrl *gomock.Controller) *MockprogramServiceRuntime {
-	mock := &MockprogramServiceRuntime{ctrl: ctrl}
-	mock.recorder = &MockprogramServiceRuntimeMockRecorder{mock}
+// NewMockserviceRuntime creates a new mock instance
+func NewMockserviceRuntime(ctrl *gomock.Controller) *MockserviceRuntime {
+	mock := &MockserviceRuntime{ctrl: ctrl}
+	mock.recorder = &MockserviceRuntimeMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use
-func (m *MockprogramServiceRuntime) EXPECT() *MockprogramServiceRuntimeMockRecorder {
+func (m *MockserviceRuntime) EXPECT() *MockserviceRuntimeMockRecorder {
 	return m.recorder
 }
 
 // Run mocks base method
-func (m *MockprogramServiceRuntime) Run(cmd *exec.Cmd) error {
+func (m *MockserviceRuntime) Run(cmd *exec.Cmd) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Run", cmd)
 	ret0, _ := ret[0].(error)
@@ -122,7 +122,7 @@ func (m *MockprogramServiceRuntime) Run(cmd *exec.Cmd) error {
 }
 
 // Run indicates an expected call of Run
-func (mr *MockprogramServiceRuntimeMockRecorder) Run(cmd interface{}) *gomock.Call {
+func (mr *MockserviceRuntimeMockRecorder) Run(cmd interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Run", reflect.TypeOf((*MockprogramServiceRuntime)(nil).Run), cmd)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Run", reflect.TypeOf((*MockserviceRuntime)(nil).Run), cmd)
 }

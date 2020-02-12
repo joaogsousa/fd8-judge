@@ -73,11 +73,11 @@ func TestExecute(t *testing.T) {
 
 			var interactorProgramService program.Service
 			if test.interactor == judge.CustomInteractor {
-				interactorProgramService, err = program.NewProgramService(test.interactorProgramService, nil)
+				interactorProgramService, err = program.NewService(test.interactorProgramService, nil)
 				assert.Equal(t, nil, err)
 			}
 
-			solutionProgramService, err := program.NewProgramService(test.solutionProgramService, nil)
+			solutionProgramService, err := program.NewService(test.solutionProgramService, nil)
 			assert.Equal(t, nil, err)
 
 			cage := &factories.Cage{TestCage: cage.New(nil, nil), RootPath: ".."}
